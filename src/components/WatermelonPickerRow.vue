@@ -7,7 +7,6 @@
 			:place="idx"
 			:row="rowNumber"
 			@pickWatermelon="addToCart"
- 
     />
   </div>
 </template>

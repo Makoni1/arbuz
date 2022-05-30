@@ -1,5 +1,5 @@
 <template>
-  <div class="watermelon" :class="classes">
+  <div class="watermelon" :class="classes" @click="isActive = !isActive">
     {{ watermelon.status === 'dropped' ? 'x' : '' }}
 
     <font-awesome-icon icon="fa-regular fa-watermelon-slice" />
