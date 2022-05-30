@@ -1,20 +1,36 @@
 <template>
   <div class="watermelon" :class="classes" @click="isActive = !isActive">
     {{ watermelon.status === 'dropped' ? 'x' : '' }}
-
-    <font-awesome-icon icon="fa-regular fa-watermelon-slice" />
-    <div class="watermelon-info">
+    <div class="watermelon-info"
+      :class="{ 'info-active': isActive }"
+      @click.stop
+    >
       <p>Ряд: {{ row + 1 }}</p>
       <p>Место: {{ place + 1 }}</p>
       <p>Статус: {{ watermelonStatus }}</p>
+      <p>Вес: {{ watermelon.weight }} кг</p>
+      <p>Кол-во</p>
+
       <div class="flex">
         <div class="quantity">
-          <button type="button" class="btn-success">-</button>
+          <button @click="minus" type="button" class="btn-success">-</button>
           <input type="number" class="quantity" min="1" max="3" v-model="size" />
-          <button  type="button" class="btn-success">+</button>
+          <button @click="plus" type="button" class="btn-success">+</button>
+        </div>
+
+        <div class="slice-div">
+          <input
+            type="checkbox"
+            id="slice"
+            name="slice"
+            @change="Checkbox"
+            :class="[isSliced ? 'checked' : '']"
+          />
+          <label class="slice-label" for="slice">Порезать дольками</label>
         </div>
       </div>
       <button class="add-basket"  @click="addToCart">Добавить в корзину</button>
+
     </div>
   </div>
 </template>
@@ -22,6 +38,13 @@
 <script>
 
 export default {
+  data() {
+    return {
+      size: 1,
+      isSliced: false,
+      isActive: false,
+    };
+  },
   name: 'WatermelonItem',
   props: {
     watermelon: {
@@ -66,9 +89,29 @@ export default {
         ...this.watermelon,
         place: this.place + 1,
         row: this.row + 1,
+        size: this.size,
+        isSliced: this.isSliced,
       };
 
-      console.log('Your watermelon', pickedWatermelon);
+      this.$emit('pickWatermelon', pickedWatermelon);
+      this.isActive = false;
+    },
+    Checkbox() {
+      this.isSliced = !this.isSliced;
+    },
+    plus() {
+      if (this.size >= 3) {
+        this.size = 3;
+      } else {
+        this.size += 1;
+      }
+    },
+    minus() {
+      if (this.size <= 1) {
+        this.size = 1;
+      } else {
+        this.size -= 1;
+      }
     },
   },
   
@@ -80,13 +123,12 @@ export default {
   display: flex;
 }
 .btn-success {
-  width: 20px;
-  height: 20px;
-  font-weight: 700;
-  background: #fff;
-  color: #19ab4b;
-  border: 1px solid #dfdfdf;
-  line-height: 14px;
+  background-color: rgb(88, 157, 88);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  padding: 3px 8px;
+  cursor: pointer;
 }
 .watermelon {
   background-color: #f8f8f8;
