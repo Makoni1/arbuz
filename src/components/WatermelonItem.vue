@@ -12,23 +12,23 @@
       <p>Кол-во</p>
 
       <div class="flex">
-        <div class="quantity">
+        <div class="w-quantity">
           <button @click="minus" type="button" class="btn-success">-</button>
           <input type="number" class="quantity" min="1" max="3" v-model="size" />
           <button @click="plus" type="button" class="btn-success">+</button>
         </div>
-
-        <div class="slice-div">
-          <input
-            type="checkbox"
-            id="slice"
-            name="slice"
-            @change="Checkbox"
-            :class="[isSliced ? 'checked' : '']"
-          />
-          <label class="slice-label" for="slice">Порезать дольками</label>
-        </div>
       </div>
+      <div class="slice">
+        <input
+          type="checkbox"
+          id="slice"
+          name="slice"
+          @change="Checkbox"
+          :class="[isSliced ? 'checked' : '']"
+        />
+        <label class="slice-label" for="slice">Порезать дольками</label>
+      </div>
+   
       <button class="add-basket"  @click="addToCart">Добавить в корзину</button>
 
     </div>
@@ -130,6 +130,10 @@ export default {
   padding: 3px 8px;
   cursor: pointer;
 }
+.quantity{
+  margin-right: 6px;
+  margin-left: 6px;
+}
 .watermelon {
   background-color: #f8f8f8;
   border-radius: 30px;
@@ -198,10 +202,11 @@ export default {
   width: 50px;
   height: 50px;
 }
+.slice-label {
+  margin-left: 4px;
+  font-size: 14px;
+}
 @media(max-width: 500px) {
-    .btn-success {
-      width: 18px;
-    }
     .quantity-input{
     width: 30px;
     height: 30px;
